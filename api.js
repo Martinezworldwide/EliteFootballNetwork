@@ -126,3 +126,21 @@ async function resetPassword(token, new_password) {
     body: JSON.stringify({ token, new_password })
   });
 }
+
+// Security Question API
+async function getSecurityQuestionStatus() {
+  return apiRequest('/users/me/security-question', {
+    method: 'GET'
+  });
+}
+
+async function updateSecurityQuestion(current_password, security_question, security_answer) {
+  return apiRequest('/users/me/security-question', {
+    method: 'PUT',
+    body: JSON.stringify({
+      current_password,
+      security_question,
+      security_answer
+    })
+  });
+}

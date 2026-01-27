@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Settings - Football Network</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>⚽ Football Network</h1>
+            <nav>
+                <a href="index.html">Feed</a>
+                <a href="submit.html">Submit Video</a>
+                <a href="profile.html">Profile</a>
+                <a href="change-password.html">Change Password</a>
+                <a href="security-question.html">Security Settings</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="auth-section">
+            <h2>Account Recovery Settings</h2>
+            
+            <div id="statusInfo" class="user-info" style="margin-bottom: 1.5rem;">
+                <p class="loading">Loading security settings...</p>
+            </div>
+
+            <div id="securityFormContainer">
+                <form id="securityQuestionForm">
+                    <div class="form-group">
+                        <label for="current_password">Current Password</label>
+                        <input type="password" id="current_password" name="current_password" required>
+                        <small>Required to verify your identity before changing security settings</small>
+                    </div>
+
+                    <div id="currentQuestionInfo" class="form-group" style="display: none;">
+                        <label>Current Security Question</label>
+                        <p id="currentQuestion" class="security-question"></p>
+                        <small>You can replace this with a new question and answer below</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="security_question">Security Question</label>
+                        <input type="text" id="security_question" name="security_question" required minlength="5" placeholder="e.g., What city were you born in?">
+                        <small>Choose a question only you can answer. Minimum 5 characters.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="security_answer">Security Answer</label>
+                        <input type="text" id="security_answer" name="security_answer" required minlength="3" placeholder="Your answer">
+                        <small>Remember this answer - you'll need it to reset your password. Minimum 3 characters.</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submitButton">Save Security Question</button>
+                </form>
+            </div>
+
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+
+            <p class="auth-link" style="margin-top: 1.5rem;">
+                <a href="profile.html">Back to Profile</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Football Network. Zero-platform, zero-paid architecture.</p>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script src="api.js"></script>
+    <script src="security-question.js"></script>
+</body>
+</html>
