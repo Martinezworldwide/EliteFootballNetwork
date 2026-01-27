@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       if (displayName !== getUser().display_name) {
         await updateDisplayName(displayName);
+        // Update localStorage with new display name
+        const user = getUser();
+        user.display_name = displayName;
+        localStorage.setItem('user', JSON.stringify(user));
       }
       await updateMyProfile(profileData);
       successMessage.textContent = 'Profile updated successfully.';

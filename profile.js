@@ -36,10 +36,20 @@ async function loadProfile() {
   const videosContainer = document.getElementById('videosContainer');
 
   try {
-    const user = getUser();
-    if (!user) {
+    const cachedUser = getUser();
+    if (!cachedUser) {
       window.location.href = 'login.html';
       return;
+    }
+
+    // Fetch latest user data from API to get updated display name
+    const userResponse = await getUserProfile(cachedUser.id);
+    const user = userResponse.user || cachedUser;
+    
+    // Update localStorage with latest display name
+    if (user.display_name !== cachedUser.display_name) {
+      const updatedUser = { ...cachedUser, display_name: user.display_name };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
     }
 
     // Basic user info
