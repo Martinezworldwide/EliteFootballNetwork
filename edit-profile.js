@@ -20,9 +20,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     errorMessage.style.display = 'none';
     successMessage.style.display = 'none';
 
+    const displayName = document.getElementById('display_name').value.trim();
     const profileData = collectProfileFormData();
 
     try {
+      if (displayName !== getUser().display_name) {
+        await updateDisplayName(displayName);
+      }
       await updateMyProfile(profileData);
       successMessage.textContent = 'Profile updated successfully.';
       successMessage.style.display = 'block';
@@ -38,9 +42,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadExistingProfile(userId) {
   try {
+    const userResponse = await getUserProfile(userId);
+    const user = userResponse.user;
     const result = await getUserProfileById(userId);
     const p = result.profile || {};
 
+    document.getElementById('display_name').value = user.display_name || '';
+    document.getElementById('real_name').value = p.real_name || '';
     document.getElementById('avatar_url').value = p.avatar_url || '';
     document.getElementById('primary_position').value = p.primary_position || '';
     document.getElementById('secondary_position').value = p.secondary_position || '';
@@ -70,9 +78,50 @@ async function loadExistingProfile(userId) {
     document.getElementById('social_youtube').value = socialLinks.youtube || '';
     document.getElementById('social_website').value = socialLinks.website || '';
     document.getElementById('social_other').value = socialLinks.other || '';
+    
+    // Load custom links
+    const customLinks = p.custom_links || [];
+    const container = document.getElementById('customLinksContainer');
+    container.innerHTML = '';
+    if (customLinks.length === 0) {
+      addCustomLink();
+    } else {
+      customLinks.forEach(link => {
+        addCustomLink(link.label, link.url);
+      });
+    }
   } catch (err) {
     console.error('Error loading existing profile', err);
   }
+}
+
+function addCustomLink(label = '', url = '') {
+  const container = document.getElementById('customLinksContainer');
+  const linkItem = document.createElement('div');
+  linkItem.className = 'custom-link-item';
+  linkItem.style.cssText = 'margin-bottom: 1rem; padding: 1rem; border: 1px solid #ddd; border-radius: 5px;';
+  linkItem.innerHTML = `
+    <div class="form-group" style="margin-bottom: 0.5rem;">
+      <label>Link Label (e.g., "Sponsor", "Fundraising", "Charity")</label>
+      <input type="text" class="custom-link-label" placeholder="Sponsor" maxlength="100" value="${escapeHtml(label)}" />
+    </div>
+    <div class="form-group" style="margin-bottom: 0.5rem;">
+      <label>URL</label>
+      <input type="url" class="custom-link-url" placeholder="https://..." value="${escapeHtml(url)}" />
+    </div>
+    <button type="button" class="btn" style="background: #dc3545; color: white; padding: 0.4rem 1rem; width: auto;" onclick="removeCustomLink(this)">Remove</button>
+  `;
+  container.appendChild(linkItem);
+}
+
+function removeCustomLink(button) {
+  button.closest('.custom-link-item').remove();
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 function collectProfileFormData() {
@@ -101,8 +150,19 @@ function collectProfileFormData() {
   if (website) social_links.website = website;
   if (other) social_links.other = other;
 
+  const custom_links = [];
+  const customLinkItems = document.querySelectorAll('.custom-link-item');
+  customLinkItems.forEach(item => {
+    const label = item.querySelector('.custom-link-label').value.trim();
+    const url = item.querySelector('.custom-link-url').value.trim();
+    if (label && url) {
+      custom_links.push({ label, url });
+    }
+  });
+
   return {
     avatar_url: document.getElementById('avatar_url').value,
+    real_name: document.getElementById('real_name').value,
     primary_position: document.getElementById('primary_position').value,
     secondary_position: document.getElementById('secondary_position').value,
     height_cm: document.getElementById('height_cm').value,
@@ -120,6 +180,7 @@ function collectProfileFormData() {
     weaknesses: document.getElementById('weaknesses').value,
     availability: document.getElementById('availability').value,
     preferred_contact: document.getElementById('preferred_contact').value,
-    social_links
+    social_links,
+    custom_links
   };
 }

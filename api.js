@@ -145,6 +145,14 @@ async function updateSecurityQuestion(current_password, security_question, secur
   });
 }
 
+// Update Display Name
+async function updateDisplayName(display_name) {
+  return apiRequest('/users/me/display-name', {
+    method: 'PUT',
+    body: JSON.stringify({ display_name })
+  });
+}
+
 // Download CV
 async function downloadUserCV(userId) {
   const url = `${API_BASE_URL}/users/${userId}/cv`;

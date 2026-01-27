@@ -138,8 +138,23 @@ function renderPublicScoutingCard(container, p) {
     }
   }
 
+  // Custom links HTML
+  let customLinksHtml = '';
+  if (p.custom_links && Array.isArray(p.custom_links) && p.custom_links.length > 0) {
+    const customLinks = p.custom_links.map(link => {
+      if (link.label && link.url) {
+        return `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`;
+      }
+      return '';
+    }).filter(Boolean);
+    if (customLinks.length > 0) {
+      customLinksHtml = `<p><strong>Additional Links:</strong> ${customLinks.join(' • ')}</p>`;
+    }
+  }
+
   container.innerHTML = `
     ${avatar}
+    ${p.real_name ? `<p><strong>Real Name:</strong> ${escapeHtml(p.real_name)}</p>` : ''}
     <p><strong>Primary Position:</strong> ${escapeHtml(p.primary_position || '')}</p>
     <p><strong>Secondary Position:</strong> ${escapeHtml(p.secondary_position || '')}</p>
     <p><strong>Vitals:</strong> ${ageText}${escapeHtml(vitals.join(' • ') || 'N/A')}</p>
@@ -153,6 +168,7 @@ function renderPublicScoutingCard(container, p) {
     <p><strong>Availability:</strong> ${escapeHtml(p.availability || '')}</p>
     <p><strong>Preferred Contact:</strong> ${escapeHtml(p.preferred_contact || '')}</p>
     ${socialLinksHtml}
+    ${customLinksHtml}
   `;
 }
 
