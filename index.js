@@ -30,30 +30,52 @@ async function loadVideos() {
 
 // Create video card HTML
 function createVideoCard(video) {
-  const embedUrl = getEmbedUrl(video.youtube_url);
-  if (!embedUrl) return '';
-
-  const date = formatDate(video.created_at);
-  const userInfo = video.user ? `<p class="video-user">By <a href="user-profile.html?id=${video.user.id}" style="color: #667eea; text-decoration: none;">${escapeHtml(video.user.display_name)}</a> (${video.user.role})</p>` : '';
-
-  return `
-    <div class="video-card">
-      <div class="video-embed">
-        <iframe src="${embedUrl}" allowfullscreen></iframe>
-      </div>
-      <div class="video-info">
-        <h3>${escapeHtml(video.title)}</h3>
-        <div class="video-meta">
-          ${video.position ? `<span>📍 ${escapeHtml(video.position)}</span>` : ''}
-          ${video.team ? `<span>⚽ ${escapeHtml(video.team)}</span>` : ''}
-          <span>📅 ${date}</span>
+  try {
+    const embedUrl = getEmbedUrl(video.youtube_url);
+    if (!embedUrl) {
+      console.warn('Invalid YouTube URL:', video.youtube_url);
+      return `
+        <div class="video-card">
+          <div class="video-info">
+            <h3>${escapeHtml(video.title)}</h3>
+            <p class="error-message">Invalid YouTube URL: ${escapeHtml(video.youtube_url)}</p>
+          </div>
         </div>
-        ${video.description ? `<p class="video-description">${escapeHtml(video.description)}</p>` : ''}
-        ${video.tags ? `<p class="video-meta">🏷️ ${escapeHtml(video.tags)}</p>` : ''}
-        ${userInfo}
+      `;
+    }
+
+    const date = formatDate(video.created_at);
+    const userInfo = video.user ? `<p class="video-user">By <a href="user-profile.html?id=${video.user.id}" style="color: #667eea; text-decoration: none;">${escapeHtml(video.user.display_name)}</a> (${video.user.role})</p>` : '';
+
+    return `
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="${embedUrl}" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <h3>${escapeHtml(video.title)}</h3>
+          <div class="video-meta">
+            ${video.position ? `<span>📍 ${escapeHtml(video.position)}</span>` : ''}
+            ${video.team ? `<span>⚽ ${escapeHtml(video.team)}</span>` : ''}
+            <span>📅 ${date}</span>
+          </div>
+          ${video.description ? `<p class="video-description">${escapeHtml(video.description)}</p>` : ''}
+          ${video.tags ? `<p class="video-meta">🏷️ ${escapeHtml(video.tags)}</p>` : ''}
+          ${userInfo}
+        </div>
       </div>
-    </div>
-  `;
+    `;
+  } catch (error) {
+    console.error('Error creating video card:', error, video);
+    return `
+      <div class="video-card">
+        <div class="video-info">
+          <h3>${escapeHtml(video.title || 'Untitled')}</h3>
+          <p class="error-message">Error loading video</p>
+        </div>
+      </div>
+    `;
+  }
 }
 
 // Escape HTML to prevent XSS

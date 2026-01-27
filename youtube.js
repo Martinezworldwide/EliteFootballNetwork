@@ -2,17 +2,26 @@
 
 // Extract YouTube video ID from URL
 function extractYouTubeId(url) {
-  if (!url) return null;
+  if (!url || typeof url !== 'string') return null;
 
+  // Clean the URL - remove whitespace
+  url = url.trim();
+
+  // Patterns for different YouTube URL formats
   const patterns = [
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/,
     /^([a-zA-Z0-9_-]{11})$/
   ];
 
   for (const pattern of patterns) {
-    const match = url.match(pattern);
-    if (match && match[1]) {
-      return match[1];
+    try {
+      const match = url.match(pattern);
+      if (match && match[1] && match[1].length === 11) {
+        return match[1];
+      }
+    } catch (e) {
+      console.error('Error matching YouTube pattern:', e);
+      continue;
     }
   }
 
