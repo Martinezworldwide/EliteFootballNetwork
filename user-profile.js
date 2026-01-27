@@ -2,6 +2,18 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
   updateNavigation();
+  
+  const downloadCvBtn = document.getElementById('downloadCvBtn');
+  if (downloadCvBtn) {
+    downloadCvBtn.addEventListener('click', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const userId = urlParams.get('id');
+      if (userId) {
+        await downloadUserCV(userId);
+      }
+    });
+  }
+  
   await loadUserProfile();
 });
 
@@ -21,7 +33,7 @@ async function loadUserProfile() {
       return;
     }
 
-    // Load basic public profile (no email)
+    // Load basic public profile (no email) //comment: uses /users/:id/profile
     userInfoDiv.innerHTML = '<p class="loading">Loading profile...</p>';
     scoutingCard.innerHTML = '<p class="loading">Loading scouting data...</p>';
     videosContainer.innerHTML = '<p class="loading">Loading videos...</p>';
@@ -36,7 +48,7 @@ async function loadUserProfile() {
 
     renderPublicScoutingCard(scoutingCard, publicProfile.profile || {});
 
-    // Load user videos using videos endpoint
+    // Load user videos using videos endpoint (reuses existing API)
     const videosResponse = await getUserVideos(userId);
     const videos = videosResponse.videos || [];
 
@@ -54,7 +66,7 @@ async function loadUserProfile() {
   }
 }
 
-// Render public scouting-style profile card
+// Render public scouting-style profile card //comment: only non-sensitive fields
 function renderPublicScoutingCard(container, p) {
   const previousTeams = (p.previous_teams || []).join(', ');
 

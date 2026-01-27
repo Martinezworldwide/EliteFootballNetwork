@@ -6,6 +6,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  const downloadCvBtn = document.getElementById('downloadCvBtn');
+  if (downloadCvBtn) {
+    downloadCvBtn.addEventListener('click', async () => {
+      const user = getUser();
+      if (user && user.id) {
+        await downloadUserCV(user.id);
+      }
+    });
+  }
+
   await loadProfile();
 });
 
@@ -41,7 +51,7 @@ async function loadProfile() {
     const videos = response.videos || [];
 
     if (videos.length === 0) {
-      // comment: show message when user has no videos yet
+      // comment: show message when user has no videos yet (string uses single backslash to escape apostrophe)
       videosContainer.innerHTML = '<p class="empty-state">You haven\'t submitted any videos yet. <a href="submit.html">Submit your first video</a>!</p>';
       return;
     }

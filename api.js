@@ -144,3 +144,9 @@ async function updateSecurityQuestion(current_password, security_question, secur
     })
   });
 }
+
+// Download CV
+async function downloadUserCV(userId) {
+  const url = `${API_BASE_URL}/users/${userId}/cv`;
+  window.open(url, '_blank');
+}
