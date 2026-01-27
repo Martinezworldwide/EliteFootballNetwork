@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Video - Football Network</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>⚽ Football Network</h1>
+            <nav>
+                <a href="index.html">Feed</a>
+                <a href="submit.html">Submit Video</a>
+                <a href="profile.html">Profile</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="submit-section">
+            <h2>Submit Video</h2>
+            <p class="info-text">Paste your YouTube video link below. Only YouTube links are accepted.</p>
+            <form id="submitForm">
+                <div class="form-group">
+                    <label for="youtube_url">YouTube URL *</label>
+                    <input type="url" id="youtube_url" name="youtube_url" placeholder="https://www.youtube.com/watch?v=..." required>
+                </div>
+                <div class="form-group">
+                    <label for="title">Title *</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="position">Position</label>
+                    <input type="text" id="position" name="position" placeholder="e.g., Striker, Midfielder">
+                </div>
+                <div class="form-group">
+                    <label for="team">Team</label>
+                    <input type="text" id="team" name="team" placeholder="e.g., FC Barcelona">
+                </div>
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <input type="text" id="tags" name="tags" placeholder="e.g., highlights, skills, goals">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Add a description of your video..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Video</button>
+            </form>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Football Network. Zero-platform, zero-paid architecture.</p>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script src="api.js"></script>
+    <script src="submit.js"></script>
+</body>
+</html>
