@@ -150,3 +150,65 @@ async function downloadUserCV(userId) {
   const url = `${API_BASE_URL}/users/${userId}/cv`;
   window.open(url, '_blank');
 }
+
+// Share Profile
+function shareProfile(userId) {
+  const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+  const profileUrl = `${baseUrl}user-profile.html?id=${userId}`;
+  
+  if (navigator.share) {
+    navigator.share({
+      title: 'Football Network Profile',
+      text: 'Check out this football player profile',
+      url: profileUrl
+    }).catch(err => {
+      if (err.name !== 'AbortError') {
+        copyToClipboard(profileUrl);
+      }
+    });
+  } else {
+    copyToClipboard(profileUrl);
+  }
+}
+
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showShareSuccess();
+    }).catch(() => {
+      fallbackCopyToClipboard(text);
+    });
+  } else {
+    fallbackCopyToClipboard(text);
+  }
+}
+
+function fallbackCopyToClipboard(text) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.style.position = 'fixed';
+  textArea.style.left = '-999999px';
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    showShareSuccess();
+  } catch (err) {
+    alert('Failed to copy. Please copy manually: ' + text);
+  }
+  document.body.removeChild(textArea);
+}
+
+function showShareSuccess() {
+  const btn = document.getElementById('shareProfileBtn');
+  if (btn) {
+    const originalText = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.style.backgroundColor = '#28a745';
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.backgroundColor = '';
+    }, 2000);
+  }
+}

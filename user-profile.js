@@ -13,6 +13,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
   }
+
+  const shareProfileBtn = document.getElementById('shareProfileBtn');
+  if (shareProfileBtn) {
+    shareProfileBtn.addEventListener('click', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const userId = urlParams.get('id');
+      if (userId) {
+        shareProfile(userId);
+      }
+    });
+  }
   
   await loadUserProfile();
 });

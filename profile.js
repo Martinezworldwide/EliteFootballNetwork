@@ -16,6 +16,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  const shareProfileBtn = document.getElementById('shareProfileBtn');
+  if (shareProfileBtn) {
+    shareProfileBtn.addEventListener('click', () => {
+      const user = getUser();
+      if (user && user.id) {
+        shareProfile(user.id);
+      }
+    });
+  }
+
   await loadProfile();
 });
 
