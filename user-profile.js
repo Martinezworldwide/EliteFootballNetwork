@@ -88,11 +88,50 @@ function renderPublicScoutingCard(container, p) {
       )}" alt="Avatar" style="max-width:120px;border-radius:50%;object-fit:cover;"></div>`
     : '';
 
+  // Calculate age from birthdate
+  let ageText = '';
+  if (p.birthdate) {
+    const birthDate = new Date(p.birthdate);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    ageText = `Age: ${age} • `;
+  }
+
+  // Social links HTML
+  let socialLinksHtml = '';
+  if (p.social_links && Object.keys(p.social_links).length > 0) {
+    const platformNames = {
+      instagram: 'Instagram',
+      twitter: 'Twitter',
+      facebook: 'Facebook',
+      linkedin: 'LinkedIn',
+      tiktok: 'TikTok',
+      youtube: 'YouTube',
+      website: 'Website',
+      other: 'Other'
+    };
+    
+    const links = [];
+    for (const [platform, url] of Object.entries(p.social_links)) {
+      if (url) {
+        const platformName = platformNames[platform] || platform.charAt(0).toUpperCase() + platform.slice(1);
+        links.push(`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(platformName)}</a>`);
+      }
+    }
+    if (links.length > 0) {
+      socialLinksHtml = `<p><strong>Social Media & Links:</strong> ${links.join(' • ')}</p>`;
+    }
+  }
+
   container.innerHTML = `
     ${avatar}
     <p><strong>Primary Position:</strong> ${escapeHtml(p.primary_position || '')}</p>
     <p><strong>Secondary Position:</strong> ${escapeHtml(p.secondary_position || '')}</p>
-    <p><strong>Vitals:</strong> ${escapeHtml(vitals.join(' • ') || 'N/A')}</p>
+    <p><strong>Vitals:</strong> ${ageText}${escapeHtml(vitals.join(' • ') || 'N/A')}</p>
     <p><strong>Current Team:</strong> ${escapeHtml(p.current_team || 'N/A')}</p>
     <p><strong>Previous Teams:</strong> ${escapeHtml(previousTeams || 'N/A')}</p>
     <p><strong>Experience & Location:</strong> ${escapeHtml(experience.join(' • ') || 'N/A')}</p>
@@ -102,6 +141,7 @@ function renderPublicScoutingCard(container, p) {
     <p><strong>Weaknesses:</strong> ${escapeHtml(p.weaknesses || '')}</p>
     <p><strong>Availability:</strong> ${escapeHtml(p.availability || '')}</p>
     <p><strong>Preferred Contact:</strong> ${escapeHtml(p.preferred_contact || '')}</p>
+    ${socialLinksHtml}
   `;
 }
 

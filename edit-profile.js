@@ -52,12 +52,24 @@ async function loadExistingProfile(userId) {
     document.getElementById('league_level').value = p.league_level || '';
     document.getElementById('location').value = p.location || '';
     document.getElementById('years_experience').value = p.years_experience ?? '';
+    document.getElementById('birthdate').value = p.birthdate ? p.birthdate.split('T')[0] : '';
     document.getElementById('bio').value = p.bio || '';
     document.getElementById('style_of_play').value = p.style_of_play || '';
     document.getElementById('strengths').value = p.strengths || '';
     document.getElementById('weaknesses').value = p.weaknesses || '';
     document.getElementById('availability').value = p.availability || '';
     document.getElementById('preferred_contact').value = p.preferred_contact || '';
+    
+    // Load social links
+    const socialLinks = p.social_links || {};
+    document.getElementById('social_instagram').value = socialLinks.instagram || '';
+    document.getElementById('social_twitter').value = socialLinks.twitter || '';
+    document.getElementById('social_facebook').value = socialLinks.facebook || '';
+    document.getElementById('social_linkedin').value = socialLinks.linkedin || '';
+    document.getElementById('social_tiktok').value = socialLinks.tiktok || '';
+    document.getElementById('social_youtube').value = socialLinks.youtube || '';
+    document.getElementById('social_website').value = socialLinks.website || '';
+    document.getElementById('social_other').value = socialLinks.other || '';
   } catch (err) {
     console.error('Error loading existing profile', err);
   }
@@ -69,6 +81,25 @@ function collectProfileFormData() {
     .split(',')
     .map(t => t.trim())
     .filter(Boolean);
+
+  const social_links = {};
+  const instagram = document.getElementById('social_instagram').value.trim();
+  const twitter = document.getElementById('social_twitter').value.trim();
+  const facebook = document.getElementById('social_facebook').value.trim();
+  const linkedin = document.getElementById('social_linkedin').value.trim();
+  const tiktok = document.getElementById('social_tiktok').value.trim();
+  const youtube = document.getElementById('social_youtube').value.trim();
+  const website = document.getElementById('social_website').value.trim();
+  const other = document.getElementById('social_other').value.trim();
+  
+  if (instagram) social_links.instagram = instagram;
+  if (twitter) social_links.twitter = twitter;
+  if (facebook) social_links.facebook = facebook;
+  if (linkedin) social_links.linkedin = linkedin;
+  if (tiktok) social_links.tiktok = tiktok;
+  if (youtube) social_links.youtube = youtube;
+  if (website) social_links.website = website;
+  if (other) social_links.other = other;
 
   return {
     avatar_url: document.getElementById('avatar_url').value,
@@ -82,11 +113,13 @@ function collectProfileFormData() {
     league_level: document.getElementById('league_level').value,
     location: document.getElementById('location').value,
     years_experience: document.getElementById('years_experience').value,
+    birthdate: document.getElementById('birthdate').value || null,
     bio: document.getElementById('bio').value,
     style_of_play: document.getElementById('style_of_play').value,
     strengths: document.getElementById('strengths').value,
     weaknesses: document.getElementById('weaknesses').value,
     availability: document.getElementById('availability').value,
-    preferred_contact: document.getElementById('preferred_contact').value
+    preferred_contact: document.getElementById('preferred_contact').value,
+    social_links
   };
 }

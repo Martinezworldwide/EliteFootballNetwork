@@ -74,6 +74,11 @@
           <input type="number" id="years_experience" name="years_experience" min="0" max="40" />
         </div>
         <div class="form-group">
+          <label for="birthdate">Birthdate</label>
+          <input type="date" id="birthdate" name="birthdate" />
+          <small>Used to calculate age</small>
+        </div>
+        <div class="form-group">
           <label for="bio">Bio</label>
           <textarea id="bio" name="bio" rows="3"></textarea>
         </div>
@@ -102,6 +107,41 @@
           <label for="preferred_contact">Preferred Contact</label>
           <input type="text" id="preferred_contact" name="preferred_contact" />
         </div>
+        
+        <h3 style="margin-top: 2rem; color: #667eea;">Social Media & Links</h3>
+        <div class="form-group">
+          <label for="social_instagram">Instagram URL</label>
+          <input type="url" id="social_instagram" name="social_instagram" placeholder="https://instagram.com/username" />
+        </div>
+        <div class="form-group">
+          <label for="social_twitter">Twitter/X URL</label>
+          <input type="url" id="social_twitter" name="social_twitter" placeholder="https://twitter.com/username" />
+        </div>
+        <div class="form-group">
+          <label for="social_facebook">Facebook URL</label>
+          <input type="url" id="social_facebook" name="social_facebook" placeholder="https://facebook.com/username" />
+        </div>
+        <div class="form-group">
+          <label for="social_linkedin">LinkedIn URL</label>
+          <input type="url" id="social_linkedin" name="social_linkedin" placeholder="https://linkedin.com/in/username" />
+        </div>
+        <div class="form-group">
+          <label for="social_tiktok">TikTok URL</label>
+          <input type="url" id="social_tiktok" name="social_tiktok" placeholder="https://tiktok.com/@username" />
+        </div>
+        <div class="form-group">
+          <label for="social_youtube">YouTube Channel URL</label>
+          <input type="url" id="social_youtube" name="social_youtube" placeholder="https://youtube.com/@username" />
+        </div>
+        <div class="form-group">
+          <label for="social_website">Personal Website</label>
+          <input type="url" id="social_website" name="social_website" placeholder="https://yourwebsite.com" />
+        </div>
+        <div class="form-group">
+          <label for="social_other">Other Link</label>
+          <input type="url" id="social_other" name="social_other" placeholder="https://..." />
+        </div>
+        
         <button type="submit" class="btn btn-primary">Save Profile</button>
       </form>
       <div id="errorMessage" class="error-message" style="display:none;"></div>
