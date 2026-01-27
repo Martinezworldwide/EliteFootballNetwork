@@ -66,3 +66,27 @@ async function submitVideo(videoData) {
     body: JSON.stringify(videoData)
   });
 }
+
+// User API
+async function getUserProfile(userId) {
+  return apiRequest(`/users/${userId}`, {
+    method: 'GET'
+  });
+}
+
+async function getAllUsers() {
+  return apiRequest('/users', {
+    method: 'GET'
+  });
+}
+
+// Auth API - Change Password
+async function changePassword(currentPassword, newPassword) {
+  return apiRequest('/auth/change-password', {
+    method: 'POST',
+    body: JSON.stringify({
+      current_password: currentPassword,
+      new_password: newPassword
+    })
+  });
+}

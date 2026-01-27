@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - Football Network</title>
+    <title>User Profile - Football Network</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,21 +12,20 @@
             <h1>⚽ Football Network</h1>
             <nav>
                 <a href="index.html">Feed</a>
-                <a href="submit.html">Submit Video</a>
-                <a href="profile.html">Profile</a>
-                <a href="change-password.html">Change Password</a>
-                <a href="#" onclick="logout()">Logout</a>
+                <a href="profile.html" id="myProfileLink" style="display: none;">My Profile</a>
+                <a href="login.html" id="loginLink">Login</a>
+                <a href="register.html" id="registerLink">Register</a>
             </nav>
         </div>
     </header>
 
     <main class="container">
         <section class="profile-section">
-            <h2>My Profile</h2>
+            <h2>User Profile</h2>
             <div id="userInfo" class="user-info">
                 <p class="loading">Loading profile...</p>
             </div>
-            <h3>My Videos</h3>
+            <h3>Videos</h3>
             <div id="videosContainer" class="videos-grid">
                 <p class="loading">Loading videos...</p>
             </div>
@@ -43,6 +42,6 @@
     <script src="auth.js"></script>
     <script src="api.js"></script>
     <script src="youtube.js"></script>
-    <script src="profile.js"></script>
+    <script src="user-profile.js"></script>
 </body>
 </html>

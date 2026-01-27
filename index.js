@@ -34,7 +34,7 @@ function createVideoCard(video) {
   if (!embedUrl) return '';
 
   const date = formatDate(video.created_at);
-  const userInfo = video.user ? `<p class="video-user">By ${video.user.display_name} (${video.user.role})</p>` : '';
+  const userInfo = video.user ? `<p class="video-user">By <a href="user-profile.html?id=${video.user.id}" style="color: #667eea; text-decoration: none;">${escapeHtml(video.user.display_name)}</a> (${video.user.role})</p>` : '';
 
   return `
     <div class="video-card">
