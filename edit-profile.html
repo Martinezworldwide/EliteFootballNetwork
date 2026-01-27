@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Profile - Football Network</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>⚽ Football Network</h1>
+      <nav>
+        <a href="index.html">Feed</a>
+        <a href="submit.html">Submit Video</a>
+        <a href="profile.html">Profile</a>
+        <a href="edit-profile.html">Edit Profile</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="submit-section">
+      <h2>Edit Profile</h2>
+      <form id="editProfileForm">
+        <div class="form-group">
+          <label for="avatar_url">Avatar URL (image link only)</label>
+          <input type="url" id="avatar_url" name="avatar_url" />
+        </div>
+        <div class="form-group">
+          <label for="primary_position">Primary Position</label>
+          <input type="text" id="primary_position" name="primary_position" />
+        </div>
+        <div class="form-group">
+          <label for="secondary_position">Secondary Position</label>
+          <input type="text" id="secondary_position" name="secondary_position" />
+        </div>
+        <div class="form-group">
+          <label for="height_cm">Height (cm)</label>
+          <input type="number" id="height_cm" name="height_cm" min="120" max="220" />
+        </div>
+        <div class="form-group">
+          <label for="weight_kg">Weight (kg)</label>
+          <input type="number" id="weight_kg" name="weight_kg" min="40" max="140" />
+        </div>
+        <div class="form-group">
+          <label for="dominant_foot">Dominant Foot</label>
+          <select id="dominant_foot" name="dominant_foot">
+            <option value="">Select</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+            <option value="both">Both</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="current_team">Current Team</label>
+          <input type="text" id="current_team" name="current_team" />
+        </div>
+        <div class="form-group">
+          <label for="previous_teams">Previous Teams (comma separated)</label>
+          <input type="text" id="previous_teams" name="previous_teams" />
+        </div>
+        <div class="form-group">
+          <label for="league_level">League Level</label>
+          <input type="text" id="league_level" name="league_level" />
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" id="location" name="location" />
+        </div>
+        <div class="form-group">
+          <label for="years_experience">Years Experience</label>
+          <input type="number" id="years_experience" name="years_experience" min="0" max="40" />
+        </div>
+        <div class="form-group">
+          <label for="bio">Bio</label>
+          <textarea id="bio" name="bio" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="style_of_play">Style of Play</label>
+          <textarea id="style_of_play" name="style_of_play" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="strengths">Strengths</label>
+          <textarea id="strengths" name="strengths" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="weaknesses">Weaknesses</label>
+          <textarea id="weaknesses" name="weaknesses" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="availability">Availability</label>
+          <select id="availability" name="availability">
+            <option value="">Select</option>
+            <option value="free_agent">Free Agent</option>
+            <option value="open_to_offers">Open to Offers</option>
+            <option value="under_contract">Under Contract</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="preferred_contact">Preferred Contact</label>
+          <input type="text" id="preferred_contact" name="preferred_contact" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save Profile</button>
+      </form>
+      <div id="errorMessage" class="error-message" style="display:none;"></div>
+      <div id="successMessage" class="success-message" style="display:none;"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Football Network. Zero-platform, zero-paid architecture.</p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+  <script src="api.js"></script>
+  <script src="edit-profile.js"></script>
+</body>
+</html>

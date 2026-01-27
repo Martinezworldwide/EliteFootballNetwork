@@ -47,7 +47,7 @@ async function login(email, password) {
   });
 }
 
-// Videos API
+// Videos API //comment: public and protected video endpoints
 async function getVideos() {
   return apiRequest('/videos', {
     method: 'GET'
@@ -67,7 +67,7 @@ async function submitVideo(videoData) {
   });
 }
 
-// User API
+// User API //comment: basic user listing/profile
 async function getUserProfile(userId) {
   return apiRequest(`/users/${userId}`, {
     method: 'GET'
@@ -77,6 +77,20 @@ async function getUserProfile(userId) {
 async function getAllUsers() {
   return apiRequest('/users', {
     method: 'GET'
+  });
+}
+
+// Profile API //comment: structured CV-style profile endpoints
+async function getUserProfileById(userId) {
+  return apiRequest(`/users/${userId}/profile`, {
+    method: 'GET'
+  });
+}
+
+async function updateMyProfile(profileData) {
+  return apiRequest('/users/me/profile', {
+    method: 'PUT',
+    body: JSON.stringify(profileData)
   });
 }
 
