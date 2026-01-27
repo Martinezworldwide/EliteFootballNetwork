@@ -41,7 +41,8 @@ async function loadProfile() {
     const videos = response.videos || [];
 
     if (videos.length === 0) {
-      videosContainer.innerHTML = '<p class="empty-state">You haven\\'t submitted any videos yet. <a href="submit.html">Submit your first video</a>!</p>';
+      // comment: show message when user has no videos yet
+      videosContainer.innerHTML = '<p class="empty-state">You haven\'t submitted any videos yet. <a href="submit.html">Submit your first video</a>!</p>';
       return;
     }
 
