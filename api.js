@@ -33,10 +33,10 @@ async function apiRequest(endpoint, options = {}) {
 }
 
 // Auth API
-async function register(email, password, display_name, role) {
+async function register(email, password, display_name, role, security_question, security_answer) {
   return apiRequest('/auth/register', {
     method: 'POST',
-    body: JSON.stringify({ email, password, display_name, role })
+    body: JSON.stringify({ email, password, display_name, role, security_question, security_answer })
   });
 }
 
@@ -102,5 +102,27 @@ async function changePassword(currentPassword, newPassword) {
       current_password: currentPassword,
       new_password: newPassword
     })
+  });
+}
+
+// Auth API - Forgot Password Flow
+async function forgotPassword(email) {
+  return apiRequest('/auth/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify({ email })
+  });
+}
+
+async function verifySecurityAnswer(email, security_answer) {
+  return apiRequest('/auth/verify-security-answer', {
+    method: 'POST',
+    body: JSON.stringify({ email, security_answer })
+  });
+}
+
+async function resetPassword(token, new_password) {
+  return apiRequest('/auth/reset-password', {
+    method: 'POST',
+    body: JSON.stringify({ token, new_password })
   });
 }

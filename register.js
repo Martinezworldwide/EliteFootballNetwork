@@ -20,9 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('password').value;
     const display_name = document.getElementById('display_name').value;
     const role = document.getElementById('role').value;
+    const security_question = document.getElementById('security_question').value;
+    const security_answer = document.getElementById('security_answer').value;
 
     try {
-      await register(email, password, display_name, role);
+      await register(email, password, display_name, role, security_question, security_answer);
       
       successMessage.textContent = 'Registration successful! Redirecting to login...';
       successMessage.style.display = 'block';
